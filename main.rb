@@ -6,6 +6,7 @@ require 'json'
 require 'rest-client'
 require 'nokogiri'
 require 'http'
+require 'open-uri'
 
 def cls
   system clear
@@ -17,32 +18,18 @@ def ask
   asked
 end
 
-def search(query)
+def search(query) # rubocop: disable Metrics/MethodLength
   url = "https://www.bing.com/search?q=#{query}"
   response = RestClient.get(url)
-<<<<<<< Updated upstream
   parsed = Nokogiri::HTML.parse(response.body)
 
   if response.code.eql?(200)
     puts 'The page is responding... OK - STATUS'
     puts 'The parsed page info is:'
-    parsed.css("a li ol").each do |content|
-      puts "\tsearch:#{content.text}\tlink:#{content[:href]}\n"
+    parsed.css('ul li h2 a').each do |link|
+      puts "#{link.text}\t#{link[:href]}"
+      puts ''
     end
-
-=======
-  # parsed = JSON.parse(response.headers)
-
-  if response.code.eql?(200)
-    puts 'The page is responding... OK - STATUS'
-    puts 'The page info is:'
-		response.headers.each do |key, value|
-			puts "#{key}: #{value}\n\n\n"
-		end 
-    # puts response.headers
-    # puts response.cookies
-    # puts response.body
->>>>>>> Stashed changes
   else
     puts 'The page is not responding... STATUS - FAILURE'
   end
