@@ -20,6 +20,7 @@ end
 def search(query)
   url = "https://www.bing.com/search?q=#{query}"
   response = RestClient.get(url)
+<<<<<<< Updated upstream
   parsed = Nokogiri::HTML.parse(response.body)
 
   if response.code.eql?(200)
@@ -29,6 +30,19 @@ def search(query)
       puts "\tsearch:#{content.text}\tlink:#{content[:href]}\n"
     end
 
+=======
+  # parsed = JSON.parse(response.headers)
+
+  if response.code.eql?(200)
+    puts 'The page is responding... OK - STATUS'
+    puts 'The page info is:'
+		response.headers.each do |key, value|
+			puts "#{key}: #{value}\n\n\n"
+		end 
+    # puts response.headers
+    # puts response.cookies
+    # puts response.body
+>>>>>>> Stashed changes
   else
     puts 'The page is not responding... STATUS - FAILURE'
   end
