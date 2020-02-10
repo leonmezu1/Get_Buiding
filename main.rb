@@ -18,7 +18,8 @@ def ask
   asked
 end
 
-def search(query) # rubocop: disable Metrics/MethodLength
+# rubocop: disable Metrics/MethodLength
+def search(query)
   url = "https://www.bing.com/search?q=#{query}"
   response = RestClient.get(url)
   parsed = Nokogiri::HTML.parse(response.body)
@@ -34,6 +35,7 @@ def search(query) # rubocop: disable Metrics/MethodLength
     puts 'The page is not responding... STATUS - FAILURE'
   end
 end
+# rubocop: enable Metrics/MethodLength
 
 puts "Enter your search please!\n"
 query = ask
